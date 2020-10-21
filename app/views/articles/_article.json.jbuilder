@@ -2,3 +2,4 @@ json.(article, :title, :slug, :body, :created_at, :updated_at, :description, :ta
 json.author article.user, partial: 'profiles/profile', as: :user
 json.favorited signed_in? ? current_user.favorited?(article) : false
 json.favorites_count article.favorites_count || 0
+json.segment article.segment_article ? article.segment_article.segment : nil

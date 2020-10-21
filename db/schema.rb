@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712061614) do
+ActiveRecord::Schema.define(version: 20201020171843) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title"
@@ -20,10 +20,12 @@ ActiveRecord::Schema.define(version: 20160712061614) do
     t.string   "description"
     t.integer  "favorites_count"
     t.integer  "user_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.integer  "segment_article_id"
   end
 
+  add_index "articles", ["segment_article_id"], name: "index_articles_on_segment_article_id"
   add_index "articles", ["slug"], name: "index_articles_on_slug", unique: true
   add_index "articles", ["user_id"], name: "index_articles_on_user_id"
 
@@ -60,6 +62,21 @@ ActiveRecord::Schema.define(version: 20160712061614) do
 
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
   add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
+
+  create_table "segment_articles", force: :cascade do |t|
+    t.integer  "segment_id", null: false
+    t.integer  "order",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "segment_articles", ["segment_id"], name: "index_segment_articles_on_segment_id"
+
+  create_table "segments", force: :cascade do |t|
+    t.string   "title",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"

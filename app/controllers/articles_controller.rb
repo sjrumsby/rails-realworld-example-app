@@ -65,6 +65,10 @@ class ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :body, :description, tag_list: [])
+    params.require(:article).permit(
+        :title, :body, :description,
+        tag_list: [],
+        segment_article_attributes: [:id, :order, :segment_id, segment_attributes: [:id, :title]]
+    )
   end
 end

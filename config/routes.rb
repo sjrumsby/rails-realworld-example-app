@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       get :feed, on: :collection
     end
 
+    resources :segments
+
     resources :tags, only: [:index]
   end
 
