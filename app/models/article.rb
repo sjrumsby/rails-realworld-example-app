@@ -1,5 +1,6 @@
 class Article < ActiveRecord::Base
   belongs_to :user
+  belongs_to :segment_article
   has_many :favorites, dependent: :destroy
   has_many :comments, dependent: :destroy
 
@@ -13,6 +14,8 @@ class Article < ActiveRecord::Base
   validates :slug, uniqueness: true, exclusion: { in: ['feed'] }
 
   has_many :articles, dependent: :destroy
+
+  accepts_nested_attributes_for :segment_article
 
   before_validation do
     self.slug ||= "#{title.to_s.parameterize}-#{rand(36**6).to_s(36)}"
